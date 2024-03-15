@@ -1,0 +1,16 @@
+<h2 class="accordion-header" id="headingTwo">
+    <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+      Genre
+    </button>
+  </h2>
+  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionFilter">
+    <div class="accordion-body">
+      <form class="form-check" *ngFor = "let genre of genreList; let i = index">
+        <input #genreInput class="form-check-input" type="checkbox" value="" id="flexCheckDefault-{{i}}" 
+        [checked] = "genresChecked.includes(genre.name)" (change) = "onCheckBoxClicked(genreInput, genre.name)">
+        <label class="form-check-label" for="flexCheckDefault-{{i}}">
+          {{ genre.name }}
+        </label>
+      </form>
+    </div>
+  </div>

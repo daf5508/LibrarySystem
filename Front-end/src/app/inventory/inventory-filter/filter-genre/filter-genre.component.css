@@ -1,0 +1,4 @@
+.accordion-body {
+    max-height: 26.5rem;
+    overflow-y: auto;
+}

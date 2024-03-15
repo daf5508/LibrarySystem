@@ -1,0 +1,337 @@
+h2 {
+    position: sticky;
+    top: 0;
+}
+
+form {
+    flex-shrink: 1;
+    width: 95%;
+    display: flex;
+    align-items: center;
+    border: 2px solid white;
+    background: transparent;
+}
+
+form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+form .fa-magnifying-glass {
+    padding: 0.625rem 1.25rem;
+    color: white;
+}
+
+form .fa-xmark {
+    padding: 0.625rem 1.25rem;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+form .fa-xmark:hover {
+    transform: scale(1.3);
+}
+
+.searchFormWrapper {
+    width: 100%;
+}
+
+.searchBarSection .fa-solid {
+    flex-shrink: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.searchBarSection {
+    width: 100%;
+    height: 5rem;
+}
+
+.suggestionsSection {
+    width: 100%;
+    overflow-x: hidden; /*For bigger screens. Hovering makes the scroll bar come up even if it's not overflowing*/
+    overflow-y: auto;
+    max-height: 50vh;
+}
+
+.suggestions {
+    cursor: pointer;
+}
+
+.suggestions:hover {
+    background-color: #39496a;
+}
+
+.suggestionImage {
+    width: 50px;
+    height: calc(40px * 1.5);
+}
+
+.books-list {
+    gap: 20px;
+}
+
+.book-block {
+    border: 2px solid white;
+    box-sizing: border-box;
+    cursor: pointer;
+    box-shadow: 0px 10px 15px black;
+    overflow-y: auto;
+    /*width: 19vw;
+    height: 25rem;
+    width: 470px;
+    height: 400px;*/
+}
+
+.book-block:hover {
+    transform: scale(1.02);
+    border: 3px solid white;
+    box-shadow: 0px 15px 20px black;
+    z-index: 1;
+}
+
+.bookImage {
+    width: 160px;
+    height: calc(160px * 1.5);
+}
+
+.empty-block {
+    visibility: hidden;
+}
+
+@media (min-width: 4001px) {
+    .book-block {
+        min-width: 474px;
+        width: 11.90vw;
+        height: 23rem;
+    }
+
+    .empty-block {
+        min-width: 474px;
+        width: 11.90vw;
+    }
+}
+
+@media (min-width: 3501px) and (max-width: 4000px) {
+    .book-block {
+        min-width: 474px;
+        width: 13.55vw;
+        max-width: 600px;
+        height: 400px;
+    }
+
+    .empty-block {
+        min-width: 474px;
+        width: 13.55vw;
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 3001px) and (max-width: 3500px) {
+    .book-block {
+        min-width: 474px;
+        width: 15.8vw;
+        height: 400px;
+    }
+
+    .empty-block {
+        min-width: 474px;
+        width: 15.8vw;
+    }
+}
+
+@media (min-width: 2501px) and (max-width: 3000px) {
+    .book-block {
+        min-width: 470px;
+        width: 18.85vw;
+        max-width: 600px;
+        height: 400px;
+    }
+
+    .empty-block {
+        min-width: 470px;
+        width: 18.85vw;
+        max-width: 600px;
+    }
+}
+
+@media (min-width: 1714px) and (max-width: 2500px) {
+    .book-block {
+        width: 23.5vw;
+        height: 400px;
+    }
+
+    .empty-block {
+        width: 23.5vw;
+    }
+}
+
+@media (min-width: 1201px) and (max-width: 1714px) {
+    .books-list {
+        gap: 20px 10px;
+    }
+    
+    .book-block {
+        width: 31.2vw;
+        height: 425px;
+    }
+
+    .empty-block {
+        width: 31.2vw;
+    }
+}
+
+@media (min-width: 1047px) and (max-width: 1200px) {
+    .book-block {
+        width: 47vw;
+        height: 400px;
+    }
+
+    .empty-block {
+        width: 47vw;
+    }
+}
+
+@media (min-width: 881px) and (max-width: 1047px) {
+    .books-list {
+        gap: 20px 10px;
+    }
+    
+    .book-block {
+        width: 47vw;
+        height: 400px;
+    }
+
+    .empty-block {
+        width: 47vw;
+    }
+}
+
+@media (min-width: 531px) and (max-width: 881px) {
+    .searchBarSection {
+        height: 4rem;
+    }
+
+    .books-list {
+        gap: 20px 10px;
+    }
+    
+    .book-block {
+        width: 46vw;
+        height: 400px;
+    }
+
+    .bookImage {
+        display: none;
+    }
+
+    .empty-block {
+        width: 46vw;
+    }
+}
+
+@media (min-width: 375px) and (max-width: 530px) {
+    .book-block {
+        width: 91vw;
+        height: 400px;
+    }
+    .empty-block {
+        width: 91vw;
+    }
+}
+
+@media (min-width: 371px) and (max-width: 400px) {
+    .book-block {
+        width: 91vw;
+        height: 450px;
+    }
+
+    .bookImage {
+        width: 140px;
+        height: calc(140px * 1.5);
+    }
+
+    .empty-block {
+        width: 91vw;
+    }
+}
+
+@media (min-width: 0px) and (max-width: 370px) {
+    .book-block {
+        width: 91vw;
+        height: 400px;
+    }
+
+    .bookImage {
+        display: none;
+    }
+
+    .empty-block {
+        width: 91vw;
+    }
+}
+
+@media (max-width: 650px) {
+    form {
+        width: 100%;
+    }
+
+    form .fa-magnifying-glass {
+        display: none !important;
+    }
+
+    form input,
+    form input::placeholder,
+    form .fa-xmark {
+        padding: 0.5rem !important;
+    }
+
+    .searchBarSection {
+        height: 3rem;
+    }
+}
+
+/* For mobile screens when the content could overflow the x axis */
+@media (max-width: 550px) {
+    .suggestionsSection {
+        overflow-x: auto;
+    }
+}
+
+@media (max-width: 450px) { 
+    form input {
+        font-size: 20px !important;
+        padding-left: 0.5rem !important;
+    }
+
+    .suggestions {
+        padding-left: 10px !important;
+    }
+
+    .suggestion-icon {
+        padding-right: 10px !important;
+    }
+
+    h1 {
+        font-size: 30px !important;
+    }
+
+    h4 {
+        font-size: 18px !important;
+    }
+
+    h6 {
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 300px) { 
+    form .fa-xmark {
+        font-size: 25px !important;
+    }
+}

@@ -1,0 +1,70 @@
+<div class="container-fluid d-flex flex-column align-items-center mt-5" (window:resize) = "checkScreenSize()">
+    <!-- Holds the size of the held-in-place-container in place rather than shrink to fit the content. Hence "static"-->
+    <div class = "static-row-container text-white">
+        <div class = "held-in-place-container d-flex justify-content-center align-items-center text-white" *ngFor = "let genre of findTopGenres()">
+            <i class="fa-solid fa-angle-left fa-2xl ps-2" (click) = "onArrowClicked(genre, true)"
+            [ngStyle] = "{'z-index': firstPage(genre) ? '-1' : 'auto'}"></i>
+            <!-- Holds the size of the inner-held-in-place-container in place rather than shrink to fit the content. Hence "static"-->
+            <div class="inner-static-row-container container-fluid d-flex align-items-center p-0">
+                <div class="inner-held-in-place-container">
+                    <div class="genre-header-container">
+                        <h3 class = "m-0 px-3">{{ genre }}</h3>
+                    </div>
+                    <div class="books-container d-flex align-items-center pb-5 overflow-auto" 
+                    [style.padding-left.px] = "getPaddingSize('left')" [style.padding-right.px] = "getPaddingSize('right')"
+                    [style.padding-top.px] = "getPaddingSize('top')">
+                        <div *ngFor = "let book of booksWithCorrespondingGenre(genre); let last = last" (click) = "onBookClicked(book)"
+                        [ngStyle] = "{'margin-right.px': last ? 0 : getPaddingSize('horizontal')}" #bookElement>
+                            <img [src]="getBookImagePath(book)" [alt]="book.title">
+                        </div>
+                    </div>
+                </div>
+                <i class="fa-solid fa-angle-right fa-2xl pe-2" (click) = "onArrowClicked(genre, false)"
+                [ngStyle] = "{'z-index': lastPage(genre) ? '-1' : 'auto'}"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid">
+    <div class="notes-container text-white my-5 mx-5">
+        <div class="m-5 mt-3">
+            <h3>To Do:<br></h3>
+            <ul>
+                <li>Load the database up with many more books
+                    <ul>
+                        <li>Possibly learn to create a web scraper to add them</li>
+                    </ul>
+                </li>
+                <li>Allow for better "similar results" in "Search" Page
+                    <ul>
+                        <li>Find a better string similarity algorithm, one that also ignores the length of the string</li>
+                    </ul>
+                </li>
+                <li>Update "Author" in "Filter Results" to use similar process
+                    <ul>
+                        <li>Add suggestions as well, like "Search" Page suggestions</li>
+                    </ul>
+                </li>
+                <li>Figure out better colors for Filter component</li>
+                <li>Truncate description based on number of lines rather than words in "Search" Page
+                    <ul>
+                        <li>This will allow for better height control</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Debating Features:<br></h3>
+            <ul>
+                <li>Add a "Back to Top" option in "Browse Inventory" Page</li>
+                <li>Add an "Organize by" (Author, Title, Page Count, Publish Date) in "Browse Inventory" Page</li>
+                <li>Have something similar for "Home" Page</li>
+                <li>When there are enough books in the database, should I prevent duplicates in "Home" Page?</li>
+            </ul>
+
+            <h3>Known Bugs:<br></h3>
+            <ul>
+                <li>Uncaught listener indicated on asynchronous response by returning true, but the message channel closed before a response was received</li>
+            </ul>
+        </div>
+    </div>
+</div>

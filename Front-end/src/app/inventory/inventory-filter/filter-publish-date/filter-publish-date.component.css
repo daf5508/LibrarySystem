@@ -1,0 +1,12 @@
+.accordion-button  {
+    border-radius: 0 !important;
+}
+
+.fa-solid {
+    color: #2D97D6;
+    cursor: pointer;
+}
+
+.fa-solid:hover {
+    color: #237FA3;
+}

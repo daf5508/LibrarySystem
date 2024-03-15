@@ -1,0 +1,45 @@
+.fa-solid {
+    color: #2D97D6;
+    cursor: pointer;
+}
+
+.fa-solid:hover {
+    color: #237FA3;
+}
+
+.pageCountInput {
+    width: 80px;
+    text-align: center;
+}
+
+.slider {
+    height: 5px;
+    border-radius: 5px;
+    background: #ddd;
+}
+
+.slider .progress {
+    height: 5px;
+    background: #2D97D6;
+    border-radius: 5px;
+}
+
+.range-input {
+    top: -37px;
+    height: 37px;
+    width: 100%;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+input[type = "range"]::-webkit-slider-thumb {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    border: 1px solid #333333;
+    pointer-events: auto;
+    background: #ddd;
+    -webkit-appearance: none;
+}

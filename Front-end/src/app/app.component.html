@@ -1,0 +1,7 @@
+<div class = "parent-layout">
+  <app-navigation></app-navigation>
+  <div [@routeAnimations] = "getRouteAnimationData(outlet)" class = "content">
+    <router-outlet #outlet = "outlet"></router-outlet>
+  </div>
+  <app-contact></app-contact>
+</div>

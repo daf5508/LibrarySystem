@@ -1,0 +1,42 @@
+<div class="container p-0">
+  <div class="header row m-0 fs-4 py-2 d-flex justify-content-between border border-dark border-2 sticky-top">
+    <div class = "col-2"></div>
+    <div class = "col-8 d-flex justify-content-center fw-bold" (click) = "onMinimizeFilterClicked(false, true)">Filter Results</div>
+    <div class = "col-2 fa-solid fa-angle-left d-flex justify-content-center align-self-center" (click) = "onMinimizeFilterClicked(false, true)"></div>
+  </div>
+
+  <form>
+    <div class="accordion p-0 m-0" id="accordionFilter">
+      <!-- Author -->
+      <div class="accordion-item">
+        <app-filter-author></app-filter-author>
+      </div>
+      <!-- Genre -->
+      <div class="accordion-item">
+        <app-filter-genre></app-filter-genre>
+      </div>
+      <!-- Page Count -->
+      <div class="accordion-item">
+        <app-filter-page-count></app-filter-page-count>
+      </div>
+      <!-- Publish Date -->
+      <div class="accordion-item">
+        <app-filter-publish-date></app-filter-publish-date>
+      </div>
+    </div>
+    <!-- In Stock -->
+    <div class="form-check m-0 border-end border-dark border-2">
+      <input #available class="form-check-input" type="checkbox" id="availablilityCheckbox"
+      [checked] = "isAvailabilityChecked" (change) = "onAvailabilityClicked()">
+      <label class="form-check-label fw-bold" for="availablilityCheckbox">
+        In Stock
+      </label>
+    </div>
+
+    <div type = "button" class="btn fs-5 d-flex justify-content-center border-dark border-2 fw-bold" 
+    (click) = "onApplyFilterClicked()">Apply Filter</div>
+
+    <div type = "button" class = "resetButton d-flex justify-content-center border-bottom border-end border-dark border-2 bg-warning" 
+    (click) = "onResetClicked()" *ngIf = "resetButtonVisible">Reset List</div>
+  </form>
+</div>

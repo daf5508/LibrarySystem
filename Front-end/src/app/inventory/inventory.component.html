@@ -1,0 +1,22 @@
+<div class="container-fluid mt-5 p-0 d-flex" (window:resize) = "checkScreenSize()">
+    
+    <!-- Filter Section -->
+    <div class="p-0 m-0 z-1 d-flex justify-content-start">
+        <app-inventory-filter [hidden] = "!isFilter_Accordion_Visible"></app-inventory-filter>
+        <app-inventory-filter-tab [hidden] = "!isFilter_Tab_Visible"></app-inventory-filter-tab>
+    </div>
+    
+    <div class="container">
+        <div class="row d-flex justify-content-xl-center justify-content-start">
+            <!-- Column 1, Book List Column-->
+            <div class="col-xl-5 col-lg-5 col-md-6 col-12">
+                <app-inventory-book-list></app-inventory-book-list>
+            </div>
+
+            <!-- Column 2, Book Details Column-->
+            <div class="col-xl-6 col-lg-6 col-md-6 d-none d-md-block">
+                <app-inventory-book-details></app-inventory-book-details>
+            </div>
+        </div>
+    </div>
+</div>

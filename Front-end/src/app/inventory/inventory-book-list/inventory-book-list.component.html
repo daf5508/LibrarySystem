@@ -1,0 +1,56 @@
+<div *ngIf = "bookListFound; else noBooksFound" class = "container-fluid text-white" (window:resize) = "checkScreenSize()">
+  <!-- <div id = "book_{{ book.book_id }}" class = "book-block container-lg" *ngFor = "let book of setContentPerPage(false)" (click) = "scrollHere(book)" -->
+  <div id = "book_{{ book.book_id }}" class = "book-block container-lg" *ngFor = "let book of contentForHTMLPage(false)" (click) = "onBookClicked($event, book)"
+  [ngStyle] = "{
+    'border-left': selectedBook === book ? '2px solid white' : 'none',
+    'box-shadow': selectedBook === book ? '0px 10px 15px black' : 'none',
+    'background-color': selectedBook === book ? '#2c3545': 'var(--backgroundColorDefaultBookList)'
+  }">
+      <p class = "title pt-2 mb-0 fs-3 fw-bold">{{ book.title }}</p>
+      <p class = "author fs-5">Author: {{ book.author }}</p>
+      <p class = "description"> {{ shortenDescription(book.description) }}</p>
+      <p class = "genre">Genre{{ book.genre.includes(',') ? 's' : '' }}: {{ organizeGenresAlphabetically(book.genre) }}</p>
+      <p class = "pages m-0">Pages: {{ book.pages }}</p>
+      <p class = "availability pb-3">
+        Availability:
+        <span [ngStyle] = "{color: book.availability === 'In Stock' ? 'Green' : 'Red'}">{{ book.availability }}</span>
+      </p>
+  </div>
+</div>
+
+<ng-template #noBooksFound>
+  <div class="d-flex flex-column justify-content-center align-items-center">
+    <h1 class = "text-white">{{ messageContent }}</h1>
+  </div>
+</ng-template>
+
+<div *ngIf = "bookListFound">
+  <nav aria-label="Page navigation" *ngIf = "getLastPage() > 1">
+    <ul class="pagination d-flex justify-content-center text-white">
+      <li class="page-item" [class.disabled] = "currentPage === 1" (click) = "currentPage !== 1 && onNextPreviousClicked(false)">
+        <a class="page-link">Previous</a>
+      </li>
+      <li class="page-item" (click) = "onPageClicked(determinePageNumber('First'), 'First')" 
+      [ngStyle]="{'background-color': setBackgroundForCurrentPage('First') ? 'black' : 'var(--backgroundColorDefaultPagination)'}">
+        <a class="page-link">{{ determinePageNumber('First') }}</a>
+      </li>
+      <li class="page-item" (click) = "onPageClicked(determinePageNumber('Second'), 'Second')" 
+      [ngStyle]="{'background-color': setBackgroundForCurrentPage('Second') ? 'black' : 'var(--backgroundColorDefaultPagination)'}">
+        <a class="page-link">{{ determinePageNumber('Second') }}</a>
+      </li>
+      <li class="page-item" *ngIf = "getLastPage() > 2" (click) = "onPageClicked(determinePageNumber('Third'), 'Third')" 
+      [ngStyle]="{'background-color': setBackgroundForCurrentPage('Third') ? 'black' : 'var(--backgroundColorDefaultPagination)'}">
+        <a class="page-link">{{ determinePageNumber('Third') }}</a>
+      </li>
+      <li class="page-item dots" *ngIf = "getLastPage() > 4 && currentPage < getLastPage() - 1">
+        <a class="page-link">...</a>
+      </li>
+      <li class="page-item" *ngIf = "currentPage < getLastPage() - 1 && getLastPage() > 3">
+        <a class="page-link">{{ getLastPage() }}</a>
+      </li>
+      <li class="page-item" [class.disabled] = "currentPage === getLastPage()" (click) = "currentPage !== getLastPage() && onNextPreviousClicked(true)">
+        <a class="page-link">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

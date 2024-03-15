@@ -1,0 +1,129 @@
+.container-fluid {
+    overflow: hidden; 
+}
+
+h3 {
+    position: sticky;
+    top: 0;
+}
+
+.books-container::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+.fa-solid {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.fa-solid:hover {
+    transform: scale(1.5);
+}
+
+img {
+    border: 1px solid white;
+    cursor: pointer;
+    box-shadow: 0px 10px 15px black;
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+    border: 3px solid white;
+    box-shadow: 0px 15px 20px black;
+    z-index: 999;
+}
+
+.notes-container {
+    border: 5px solid rgba(255, 255, 255, 0.5);
+    background: linear-gradient(180.2deg, rgb(30, 33, 48) 6.8%, rgb(74, 98, 110) 131%);
+}
+
+/* 12 books */
+@media (min-width: 2801px) {
+    img {
+        width: 7.5vw;
+        height: calc(7.5vw * 1.5);
+    }
+}
+
+/* 11 books */
+@media (min-width: 2401px) and (max-width: 2800px) {
+    img {
+        width: 8.15vw;
+        height: calc(8.15vw * 1.5);
+    }
+}
+
+/* 10 books */
+@media (min-width: 2001px) and (max-width: 2400px) {
+    img {
+        width: 8.75vw;
+        height: calc(8.75vw * 1.5);
+    }
+}
+
+/* 9 books */
+@media (min-width: 1701px) and (max-width: 2000px) {
+    img {
+        width: 9.55vw;
+        height: calc(9.55vw * 1.5);
+    }
+}
+
+/* 8 books */
+@media (min-width: 1501px) and (max-width: 1700px) {
+    img {
+        width: 10.7vw;
+        height: calc(10.7vw * 1.5);
+    }
+}
+
+/* 7 books */
+@media (min-width: 1301px) and (max-width: 1500px) {
+    img {
+        width: 12.45vw;
+        height: calc(12.45vw * 1.5);
+    }
+}
+
+/* 6 books */
+@media (min-width: 1101px) and (max-width: 1300px) {
+    img {
+        width: 14.3vw;
+        height: calc(14.3vw * 1.5);
+    }
+}
+
+/* 5 books */
+@media (min-width: 921px) and (max-width: 1100px) {
+    img {
+        width: 16.85vw;
+        height: calc(16.85vw * 1.5);
+    }
+}
+
+/* 4 books */
+@media (min-width: 761px) and (max-width: 920px) {
+    img {
+        width: 20.55vw;
+        height: calc(20.55vw * 1.5);
+    }
+}
+
+/* 3 books */
+@media (min-width: 501px) and (max-width: 760px) {
+    img {
+        width: 26.2vw;
+        height: calc(26.2vw * 1.5);
+    }
+}
+
+/* 2 books */
+@media (min-width: 0px) and (max-width: 500px) {
+    img {
+        width: 32.5vw;
+        height: calc(32.5vw * 1.5);
+    }
+}

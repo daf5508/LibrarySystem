@@ -1,0 +1,6 @@
+<div class="container p-0" (window:resize) = "checkScreenSize()">
+    <div class = "filter-tab fs-4 py-2 mx-0 d-flex justify-content-center border border-light border-2" (click) = "onMaximizeFilterClicked">
+        <div id = "content" class = "ps-2 fw-bold" (click) = "onMaximizeFilterClicked(true, false)">{{ filterContent }}</div>
+        <div class = "fa-solid fa-angle-right px-2 align-self-center" (click) = "onMaximizeFilterClicked(true, false)"></div>
+    </div>
+</div>

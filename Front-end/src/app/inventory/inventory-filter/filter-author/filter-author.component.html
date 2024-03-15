@@ -1,0 +1,17 @@
+<h2 class="accordion-header" id="headingOne">
+  <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+    Author
+  </button>
+</h2>
+<div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionFilter">
+  <div class="accordion-body">
+    <form class="d-flex">
+      <input class="form-control me-2" type="text" placeholder="Search..." aria-label="Search" [(ngModel)] = "authorInputValue" name = "authorInput">
+      <button class = "btn" type = "submit" (click) = "onSearchClicked()" >Search</button>
+    </form>
+    <div class = "d-flex align-items-center mt-3" *ngFor = "let author of authors">
+      <i class="fa-regular fa-circle-xmark pe-2" (click) = "onRemoveAuthorClicked(author)"></i>
+      <p class = "m-0 p-0"> {{ author }} </p>
+    </div>
+  </div>
+</div>

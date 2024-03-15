@@ -1,0 +1,26 @@
+.form-control {
+    border-radius: 0 !important;
+    padding: 0rem 0.3rem;
+}
+
+.accordion-button  {
+    border-radius: 0 !important;
+}
+
+.btn {
+    background-color: #4285f4;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px 2px 2px 1px;
+}
+
+.btn:hover {
+    background-color: #3e6ab8;
+}
+
+.fa-regular:hover {
+    color: #5E7290;
+    cursor: pointer;
+}

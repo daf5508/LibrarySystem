@@ -1,0 +1,38 @@
+:root {
+    --backgroundColor-defaultBookList: linear-gradient(to right, #1a2533, #3b3b3b, #1a2533);
+    --backgroundColor-defaultPagination: rgba(255, 255, 255, 0.2);
+}
+  
+.backgroundColorDefaultBookList {
+    background-color: var(--backgroundColor-defaultBookList);
+}
+
+.backgroundColorDefaultPagination {
+    background-color: var(--backgroundColor-defaultPagination);
+}
+  
+.book-block {
+    max-width: 30rem;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.book-block:hover {
+    background-color: #2c3545 !important;
+}
+
+.page-link {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dots {
+    pointer-events: none;
+}
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}

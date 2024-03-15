@@ -1,0 +1,50 @@
+<h2 class="accordion-header" id="headingThree">
+  <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+    Page Count
+  </button>
+</h2>
+<div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionFilter">
+  <div class="accordion-body">
+    <span data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" [title]="tooltipMessage">
+      <i class="fa-solid fa-info-circle"></i>
+    </span>
+    <div class="d-flex justify-content-center align-items-center">
+      <input #fieldInputExact type = "number" class = "pageCountInput me-2" placeholder="Enter #" [(ngModel)] = "desiredPagesValue"
+      (focusout) = "onDesiredValueEntered(fieldInputExact.value)"
+      #enterExactValue
+      (keyup.enter) = "onEnterKeyPressed(enterExactValue)">
+      <label>Pages</label>
+    </div>
+
+    <!-- Min and Max Input Fields -->
+    <div class = "page-input d-flex justify-content-center align-items-center my-4">
+      <div class="field">
+        <span class = "me-2">Min</span>
+        <input #fieldInputMin type="number" class = "pageCountInput" [(ngModel)] = "desiredMinValue"
+        (focusout) = "onMinInputValueChanged(fieldInputMin.value, fieldInputMax.value)" 
+        #enterMinValue
+        (keyup.enter) = "onEnterKeyPressed(enterMinValue)"> <!-- You made it -->
+      </div>
+      <div class="separator mx-2">-</div>
+      <div class="field">
+        <span class = "me-2">Max</span>
+        <input #fieldInputMax type="number" class = "pageCountInput" [(ngModel)] = "desiredMaxValue" 
+        (focusout) = "onMaxInputValueChanged(fieldInputMin.value, fieldInputMax.value)" 
+        #enterMaxValue
+        (keyup.enter) = "onEnterKeyPressed(enterMaxValue)">
+      </div>
+    </div>
+
+    <!-- Range Slider -->
+    <div class="slider mb-3 position-relative">
+      <div class="progress position-absolute" [ngStyle]="progressBarStyles"></div>
+    </div>
+    <div class="position-relative">
+      <input #sliderInputMin type = "range" class = "range-input position-absolute" [min] = "rangeMinValue" [max] = "rangeMaxValue" [step] = "steps" 
+      [(ngModel)] = "sliderMinValue" (ngModelChange) = "onMinSliderValueChanged(sliderInputMin.value, sliderInputMax.value)">
+      
+      <input #sliderInputMax type = "range" class = "range-input position-absolute" [min] = "rangeMinValue" [max] = "rangeMaxValue" [step] = "steps" 
+      [(ngModel)] = "sliderMaxValue" (ngModelChange) = "onMaxSliderValueChanged(sliderInputMin.value, sliderInputMax.value)">
+    </div>
+  </div>
+</div>

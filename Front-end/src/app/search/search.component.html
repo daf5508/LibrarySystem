@@ -1,0 +1,87 @@
+<div class="container-fluid p-0" (window:resize) = "checkScreensize()">
+    <div class = "my-5 d-flex flex-column align-items-center text-white">
+        <form class = "searchForm p-0 m-0" 
+        [ngStyle] = "{ 
+            'background-color': focused ? '#2c3545' : 'transparent', 
+            'border-bottom-left-radius': (focused && suggestions.length > 0) ? '10px' : '0px',
+            'border-bottom-right-radius': (focused && suggestions.length > 0) ? '10px' : '0px' 
+        }"
+        (keydown.enter) = "onSearch()"
+        #searchForm>
+            <div class = "searchFormWrapper">
+                <div class ="searchBarSection d-flex align-items-center" 
+                [ngStyle] = "{ 
+                    'border-bottom': (focused && suggestions.length > 0) ? '2px solid white' : 'none', 
+                }">
+                    <i class="fa-solid fa-magnifying-glass fa-2xl"></i>
+                    <input type = "text" class = "searchInput fs-1 text-white" [placeholder] = "searchBarPlaceholder" [(ngModel)] = "searchInputValue" name = "searchInput" autocomplete="off"
+                    (input) = "findSuggestions()">
+                    <i class="fa-solid fa-xmark fa-2xl" *ngIf = "searchInputValue !== ''" (click) = "onClearClicked()"></i>
+                </div>
+
+                <!-- Suggestions -->
+                <div class = "suggestionsSection" *ngIf = "focused && suggestions.length > 0" #suggestionSection>
+                    <ul class = "suggestionsList p-0">
+                        <li class = "suggestions pt-2 pb-0 ps-4 fs-5" *ngFor = "let book of suggestions" (click) = "onSuggestionClicked(book)">
+                            <!-- Need to see if I clicked on a suggestion book. Depending where you click, you get either the div line, 
+                                the img line, the h4 or the h6 line. So I gave them all the same class name and just look for that-->
+                            <div class = "allTheSame d-flex align-items-center" *ngIf = "book.title !== ''">
+                                <i class="suggestion-icon fa-solid fa-book fa-lg pe-3" style="color: #74C0FC;"></i>
+                                <img class = "allTheSame suggestionImage pe-3 py-1" [src]="getBookImagePath(book)" [alt]="book.title">
+                                <div>
+                                    <h4 class = "allTheSame">{{ book.title }}</h4>
+                                    <h6 class = "allTheSame">{{ book.author }}</h6>
+                                </div>
+                            </div>
+                            <div class = "allTheSame d-flex align-items-center" *ngIf = "book.title === '' && book.author !== ''"> 
+                                <i class="suggestion-icon fa-solid fa-user fa-lg pe-3" style="color: #74C0FC;"></i>
+                                <h1 class = "allTheSame">{{ book.author }}</h1>
+                            </div>
+                            <div class = "allTheSame d-flex align-items-center" *ngIf = "book.title === '' && book.genre !== ''"> 
+                                <i class="suggestion-icon fa-solid fa-tag fa-lg pe-3" style="color: #74C0FC;"></i>
+                                <h1 class = "allTheSame">{{ book.genre }}</h1>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="books-container container-fluid d-flex justify-content-center">
+        <div class="books-list d-flex flex-wrap justify-content-center text-white">
+            <div class = "book-block" *ngFor = "let book of resultList" (click) = "onBookClicked(book)" #bookBlock>
+                <div class = "d-flex justify-content-center">
+                    <p class = "title py-2 px-2 mb-0 fs-4 fw-bold">{{ book.title }}</p>
+                </div>
+                <div class = "d-flex justify-content-center px-2">
+                    <img class = "bookImage" [src] = "book.image" [alt]="book.title" #myBookImage>
+
+                    <div class = "ms-3">
+                        <p class = "author fs-6">Author: {{ book.author }}</p>
+                        <p class = "description fs-6"> {{ shortenDescription(book.description, 20) }}</p>
+                        <p class = "genre fs-6">Genre{{ book.genre.includes(',') ? 's' : '' }}: {{ shortenDescription(organizeGenresAlphabetically(book.genre), 5) }}</p>
+                        <p class = "pages m-0 fs-6">Pages: {{ book.pages }}</p>
+                        <p class = "availability fs-6">
+                            Availability:
+                            <span [ngStyle] = "{color: book.availability === 'In Stock' ? 'Green' : 'Red'}">{{ book.availability }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Fix to make the last real book blocks "center" but left -->
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+            <div class="empty-block"></div>
+        </div>
+    </div>
+
+    <h2 class = "m-0 px-5 text-white d-flex justify-content-center" *ngIf = "resultList.length === 0 && searched">No Results Found</h2>
+</div>

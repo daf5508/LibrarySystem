@@ -1,0 +1,20 @@
+<div id = "details-box" class = "container border border-light border-2 m-0 position-fixed">
+    <div class="row text-white">
+        <!-- <div class="col-4 d-flex justify-content-center align-items-center pt-1">
+            <img class = "image" [src]="bookDetails.image" alt="The Lost Girl Cover">
+        </div> -->
+        <div class="details col-12">
+            <h2 class = "my-3 mx-0 d-flex justify-content-center">{{ bookDetails.title }}</h2>
+            <p class = "m-0 fs-5">Author: {{ bookDetails.author }}</p>
+            <p class = "mt-0 fs-5">Genre{{ bookDetails.genre.includes(',') ? 's' : '' }}: {{ organizeGenresAlphabetically(bookDetails.genre) }}</p>
+            <p class = "m-0 fs-5">Pages: {{ bookDetails.pages }}</p>
+            <p class = "mt-0 fs-5">Published: {{ changeDateFormat(bookDetails.published) }}</p>
+            <p class = "m-0 fs-5">
+                Availability: 
+                <span [ngStyle] = "{color: bookDetails.availability === 'In Stock' ? 'Green' : 'Red'}">{{ bookDetails.availability }}</span>
+        </div>
+        <div class="col-12 mt-5">
+            <p class = "description fs-5"> {{ bookDetails.description }} </p>
+        </div>
+    </div>
+</div>

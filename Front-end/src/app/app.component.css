@@ -1,0 +1,4 @@
+.parent-layout {
+    background: linear-gradient(to right, #1a2533, #3b3b3b, #1a2533);
+    min-height: 100vh;
+}

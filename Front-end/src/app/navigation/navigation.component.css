@@ -1,0 +1,58 @@
+.navbar {
+    /*background-color: #ff6b6b;*/
+    background: linear-gradient(to right, #1a2533, #3b3b3b, #1a2533);
+    min-width: 15.313rem;
+}
+
+.navbar-toggler {
+    background-color: white;
+}
+
+.header-link
+{
+    color: white;
+    text-decoration: none;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.nav-link::after {
+    content: '';
+    height: 3px;
+    width: 0;
+    background-color: white;
+    display: block;
+    transition: 0.3s ease-in-out;
+}
+
+.nav-link:hover::after {
+    content: '';
+    height: 3px;
+    width: 100%;
+    background-color: white;
+    display: block;
+}
+
+@media (min-width: 768px) and (max-width: 1200px) {
+    .about {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1000px) {
+    .contact {
+        display: none;
+    }
+}
+
+
+/* Media query for smaller screens */
+@media (max-width: 16.875rem) {
+    h2 {
+        display: none;
+    }
+}
