@@ -1,3 +1,5 @@
+const logger = require('./logger.js');
+
 const nodemailer = require('nodemailer');
 
 const dotenv = require('dotenv');
@@ -7,8 +9,6 @@ const secureEnv = require('secure-env');
 
 let transporter;
 
-const timezone = { timeZone: 'America/New_York' };
-
 // CHANGES: Begin Commenting Out ---------------------------
 /* try 
 {
@@ -16,7 +16,7 @@ const timezone = { timeZone: 'America/New_York' };
 }
 catch (error)
 {
-    console.error("(" + getDate() + ", " + getTime() + "): " + "Error reading from env file: " , error);
+    logger.log(`Error reading from env file: ${error}`);
 } */
 // --------------------------- End Commenting Out
 
@@ -38,7 +38,7 @@ try
 }
 catch (error)
 {
-    console.error("(" + dateAndTime + "): " + "Error reading from secure env file: " , error);
+    logger.log(`Error reading from secure-env file: ${error}`);
 }
 
 async function sendError(system, end, file, method, action, issue) {
@@ -46,7 +46,6 @@ async function sendError(system, end, file, method, action, issue) {
     {
         const date = getDate();
         const time = getTime();
-        const dateAndTime = date + ", " + time;
 
         const messageParams = 
         {
@@ -63,7 +62,7 @@ async function sendError(system, end, file, method, action, issue) {
     }
 }
 
-function getDate() {
+function getDate(){ 
     // Code for getDate function
 }
 

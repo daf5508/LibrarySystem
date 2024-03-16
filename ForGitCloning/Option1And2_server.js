@@ -1,12 +1,13 @@
 const reportError = require('./errorReporting.js');
+const logger = require('./logger.js');
 
-const cors = require("cors");
-const express = require("express");
-const fs = require('fs');
-const bodyParser = require('body-parser');
 const mysql = require("mysql2/promise");
-const path = require('path');
+const express = require("express");
 const app = express();
+const cors = require("cors");
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -15,6 +16,12 @@ app.use(cors());
 const dotenv = require('dotenv');
 let env;
 
+let initialStartup = true;
+let pool;
+
+const retryDelay = 1000; //Set delay to one second
+const maxRetries = 5;
+
 // CHANGES: Begin Commenting Out ---------------------------
 /* try 
 {
@@ -22,7 +29,7 @@ let env;
 }
 catch (error)
 {
-    console.error("(" + getDateAndTime() + "): " + "Error reading from env file: " , error);
+    logger.log(`Error reading from env file: ${error}`);
     process.exit(1);
 }
 
@@ -34,21 +41,16 @@ try
 }
 catch (error)
 {
-    console.error("(" + getDateAndTime() + "): " + "Error reading from secure env file: " , error);
+    logger.log(`Error reading from secure-env file: ${error}`);
     process.exit(1);
 } */
 // --------------------------- End Commenting Out
-
-let pool;
-
-const retryDelay = 1000; //Set delay to one second
-const maxRetries = 5;
 
 async function connectToDatabase() {
 
     for (let attempt = 1; attempt <= maxRetries; attempt++)
     {
-        console.log("(" + getDateAndTime() + "): " + "Attempting to connect to database. Attempt #" + attempt);
+        logger.log(`Attempting to connect to database. Attempt #${attempt}`);
 
         try
         {
@@ -61,7 +63,7 @@ async function connectToDatabase() {
                 pool = mysql.createPool({
                     host: '127.0.0.1',
                     port: '3306',
-                    user: 'root',
+                    user: 'your username (Ex: root)',
                     password: 'your password',
                     database: 'librarydb',
                     connectionLimit: 20, //Max 20 connections in the pool
@@ -69,6 +71,7 @@ async function connectToDatabase() {
                 });
                 // --------------------------- End Change
             }
+            
             //Rest of code
         }
         catch (error)
@@ -84,7 +87,3 @@ async function startServer() {
 }
 
 startServer();
-
-function getDateAndTime() {
-    // Code for getDateAndTime function
-}
