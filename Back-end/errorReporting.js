@@ -1,3 +1,5 @@
+const logger = require('./logger.js');
+
 const nodemailer = require('nodemailer');
 
 const dotenv = require('dotenv');
@@ -7,15 +9,13 @@ const secureEnv = require('secure-env');
 
 let transporter;
 
-const timezone = { timeZone: 'America/New_York' };
-
 try 
 {
     env = dotenv.config();
 }
 catch (error)
 {
-    console.error("(" + getDate() + ", " + getTime() + "): " + "Error reading from env file: " , error);
+    logger.log(`Error reading from env file: ${error}`);
 }
 
 try 
@@ -33,7 +33,7 @@ try
 }
 catch (error)
 {
-    console.error("(" + dateAndTime + "): " + "Error reading from secure env file: " , error);
+    logger.log(`Error reading from secure-env file: ${error}`);
 }
 
 async function sendError(system, end, file, method, action, issue) {
@@ -41,7 +41,6 @@ async function sendError(system, end, file, method, action, issue) {
     {
         const date = getDate();
         const time = getTime();
-        const dateAndTime = date + ", " + time;
 
         const messageParams = 
         {
@@ -53,30 +52,30 @@ async function sendError(system, end, file, method, action, issue) {
 
         if (sentMessage)
         {
-            console.log("(" + dateAndTime + "): " + "Text Sent Successfully!");
+            logger.log(`Text Sent Successfully!`);
         }
         else
         {
-            console.log("(" + dateAndTime + "): " + "Error sending message: ", issue);
+            logger.log(`Failed to send text`);
         }
     }
     catch (error)
     {
-        console.log("(" + dateAndTime + "): " + "Error in sendError: ", error);
+        logger.log(`Error in sendError: ${error}`);
     }
 }
 
-function getDate() {
-    //Retrieve the current date for EST
+function getDate(){ 
     const currentDate = new Date();
+    const timezone = { timeZone: 'America/New_York' };
     const date = currentDate.toLocaleDateString('en-US', timezone);
 
     return date;
 }
 
 function getTime() {
-    //Retrieve the current time for EST
     const currentTime = new Date();
+    const timezone = { timeZone: 'America/New_York' };
     const time = currentTime.toLocaleTimeString('en-US', timezone);
 
     return time;

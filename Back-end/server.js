@@ -1,12 +1,13 @@
 const reportError = require('./errorReporting.js');
+const logger = require('./logger.js');
 
-const cors = require("cors");
-const express = require("express");
-const fs = require('fs');
-const bodyParser = require('body-parser');
 const mysql = require("mysql2/promise");
-const path = require('path');
+const express = require("express");
 const app = express();
+const cors = require("cors");
+const fs = require('fs');
+const path = require('path');
+const bodyParser = require('body-parser');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -15,13 +16,19 @@ app.use(cors());
 const dotenv = require('dotenv');
 let env;
 
+let initialStartup = true;
+let pool;
+
+const retryDelay = 1000; //Set delay to one second
+const maxRetries = 5;
+
 try 
 {
     env = dotenv.config();
 }
 catch (error)
 {
-    console.error("(" + getDateAndTime() + "): " + "Error reading from env file: " , error);
+    logger.log(`Error reading from env file: ${error}`);
     process.exit(1);
 }
 
@@ -33,20 +40,15 @@ try
 }
 catch (error)
 {
-    console.error("(" + getDateAndTime() + "): " + "Error reading from secure env file: " , error);
+    logger.log(`Error reading from secure-env file: ${error}`);
     process.exit(1);
 }
-
-let pool;
-
-const retryDelay = 1000; //Set delay to one second
-const maxRetries = 5;
 
 async function connectToDatabase() {
 
     for (let attempt = 1; attempt <= maxRetries; attempt++)
     {
-        console.log("(" + getDateAndTime() + "): " + "Attempting to connect to database. Attempt #" + attempt);
+        logger.log(`Attempting to connect to database. Attempt #${attempt}`);
 
         try
         {
@@ -69,7 +71,11 @@ async function connectToDatabase() {
             const connection = await pool.getConnection();
             connection.release();
 
-            console.log("(" + getDateAndTime() + "): " + "Reconnection to database successful");
+            if (!initialStartup)
+            {
+                logger.log(`Reconnection to database successful`);
+            }
+
             return true;
         }
         catch (error)
@@ -78,7 +84,7 @@ async function connectToDatabase() {
         }
     }
     
-    console.log("(" + getDateAndTime() + "): " + "Failed to connect to MySQL Database after maximum retries");
+    logger.log(`Failed to connect to MySQL Database after maximum retries`);
     return false;
 }
 
@@ -89,16 +95,17 @@ async function startServer() {
 
         if (poolCreation)
         {
-            console.log("(" + getDateAndTime() + "): " + "Success: MySQL Database Connection Successful");
+            initialStartup = false;
+            logger.log(`Success: MySQL Database Connection Successful`);
 
             app.listen(3000, ()=> {
-                console.log("(" + getDateAndTime() + "): " + "Express.js server listening on port 3000");
+                logger.log(`Express.js server listening on port 3000`);
             });
 
             app.use(express.static(path.join(__dirname, '..', 'librarysystem-ui', 'dist', 'library-system')));
 
             app.get("/getAllBooks", async (req, res) => {
-                console.log("(" + getDateAndTime() + "): " + "Received GET request for /getAllBooks");
+                logger.log(`Received GET request for /getAllBooks`);
                 try 
                 {
                     const connection = await pool.getConnection(); //Retrieve connection from connection pool
@@ -106,7 +113,7 @@ async function startServer() {
                     connection.release(); //Release the connection back to the pool
                     res.status(200).json(rows[0]);
 
-                    console.log("(" + getDateAndTime() + "): " + "Success sending book list");
+                    logger.log(`Success sending book list`);
                 }
                 catch (error)
                 {
@@ -114,7 +121,7 @@ async function startServer() {
 
                     if (!retryPoolCreation)
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Error sending book list");
+                        logger.log(`Error sending book list`);
 
                         res.status(500).send("Internal Server Error: Issue getting book list");
                         reportError.sendError("Library System", "Back-end", "server.js", "app.get(/getAllBooks)", "Getting book list from MySQL Database", error);
@@ -122,14 +129,14 @@ async function startServer() {
                     }
                     else 
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Attempting to send book list again");
-                        app.handle(req, res);
+                        logger.log(`Attempting to /getAllBooks again`);
+                        app.handle(req, res); //Attempt to run app.get(/getAllBooks) again
                     }
                 }
             });
 
             app.get("/getAllGenres", async (req, res) => {
-                console.log("(" + getDateAndTime() + "): " + "Received GET request for /getAllGenres");
+                logger.log(`Received GET request for /getAllGenres`);
                 try 
                 {
                     const connection = await pool.getConnection(); //Retrieve connection from connection pool
@@ -137,7 +144,7 @@ async function startServer() {
                     connection.release(); //Release the connection back to the pool
                     res.status(200).json(rows[0]);
 
-                    console.log("(" + getDateAndTime() + "): " + "Success sending genre list");
+                    logger.log(`Success sending genre list`);
                 }
                 catch (error)
                 {
@@ -145,7 +152,7 @@ async function startServer() {
 
                     if (!retryPoolCreation)
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Error sending genre list");
+                        logger.log(`Error sending genre list`);
 
                         res.status(500).send("Internal Server Error: Issue getting genre list");
                         reportError.sendError("Library System", "Back-end", "server.js", "app.get(/getAllGenres)", "Getting genre list from MySQL Database", error);
@@ -153,14 +160,14 @@ async function startServer() {
                     }
                     else 
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Attempting to send genre list again");
-                        app.handle(req, res);
+                        logger.log(`Attempting to /getAllGenres again`);
+                        app.handle(req, res); //Attempt to run app.get(/getAllGenres) again
                     }
                 }
             });
 
             app.get("/getMaxPages", async (req, res) => {
-                console.log("(" + getDateAndTime() + "): " + "Received GET request for /getMaxPages");
+                logger.log(`Received GET request for /getMaxPages`);
                 try 
                 {
                     const connection = await pool.getConnection(); //Retrieve connection from connection pool
@@ -170,7 +177,7 @@ async function startServer() {
                     const maxPages = rows[0][0].maxPages;
                     res.status(200).json(maxPages);
 
-                    console.log("(" + getDateAndTime() + "): " + "Success sending max page count");
+                    logger.log(`Success sending max page count`);
                 }
                 catch (error)
                 {
@@ -178,7 +185,7 @@ async function startServer() {
 
                     if (!retryPoolCreation)
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Error sending max page count");
+                        logger.log(`Error sending max page count`);
 
                         res.status(500).send("Internal Server Error: Issue getting max page count");
                         reportError.sendError("Library System", "Back-end", "server.js", "app.get(/getMaxPages)", "Getting max pages from MySQL Database", error);
@@ -186,14 +193,14 @@ async function startServer() {
                     }
                     else 
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Attempting to send max page count again");
-                        app.handle(req, res);
+                        logger.log(`Attempting to /getMaxPages again`);
+                        app.handle(req, res); //Attempt to run app.get(/getMaxPages) again
                     }
                 }
             });
         
             app.get("/getBooks_ByFilterRequirements", async (req, res) => {
-                console.log("(" + getDateAndTime() + "): " + "Received GET request for /getBooks_ByFilterRequirements");
+                logger.log(`Received GET request for /getBooks_ByFilterRequirements`);
                 try 
                 {
                     const authors = req.query.authors === 'null' ? null : req.query.authors;
@@ -208,7 +215,7 @@ async function startServer() {
 
                     res.status(200).json(rows[0]);
 
-                    console.log("(" + getDateAndTime() + "): " + "Success sending filtered book list");
+                    logger.log(`Success sending filtered book list`);
                 }
                 catch (error)
                 {
@@ -216,7 +223,7 @@ async function startServer() {
 
                     if (!retryPoolCreation)
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Error sending filtered book list");
+                        logger.log(`Error sending filtered book list`);
 
                         res.status(500).send("Internal Server Error: Issue getting filtered book list");
                         reportError.sendError("Library System", "Back-end", "server.js", "app.get(/getBooks_ByFilterRequirements)", "Getting filtered book list from MySQL Database", error);
@@ -224,8 +231,8 @@ async function startServer() {
                     }
                     else 
                     {
-                        console.log("(" + getDateAndTime() + "): " + "Attempting to send filtered book list again");
-                        app.handle(req, res);
+                        logger.log(`Attempting to /getBooks_ByFilterRequirements again`);
+                        app.handle(req, res); //Attempt to run app.get(/getBooks_ByFilterRequirements) again
                     }
                 }
             });
@@ -239,12 +246,12 @@ async function startServer() {
                 const action = req.body.action;
                 const error = req.body.error;
 
-                console.log("(" + getDateAndTime() + "): " + "Received ERROR report");
+                logger.log(`Received ERROR report`);
                 reportError.sendError(system, end, file, method, action, error);
             });
             
             app.get('/*', (req, res) => {
-                console.log("(" + getDateAndTime() + "): " + "Redirecting to index.html");
+                logger.log(`Redirecting to index.html`);
 
                 //Set the path of the index.html file
                 const indexPath = path.join(__dirname, '..', 'librarysystem-ui', 'dist', 'library-system', 'index.html');
@@ -267,7 +274,7 @@ async function startServer() {
                             }
                             else 
                             {
-                                console.log("(" + getDateAndTime() + "): " + "Redirected successfully");
+                                logger.log(`Redirected successfully`);
                             }
                         });
                     }
@@ -276,25 +283,16 @@ async function startServer() {
         }
         else 
         {
-            console.log("(" + getDateAndTime() + "): " + "Failed to connect to MySQL Database after maximum retries");
+            logger.log(`Failed to connect to MySQL Database after maximum retries`);
             reportError.sendError("Library System", "Back-end", "server.js", "startServer", "Connecting to MySQL database", "Failure to connect to MySQL Database");
             process.exit(1);
         }
     }
     catch (error)
     {
-        console.log("(" + getDateAndTime() + "): " + "Error setting variables and/or reading from env files");
+        logger.log(`Error setting variables and/or reading from env files`);
         reportError.sendError("Library System", "Back-end", "server.js", "startServer", "Setting variables and reading from env files", error);
     }
 }
 
 startServer();
-
-function getDateAndTime() {
-    //Retrieve the current date and time for EST
-    const currentDateAndTime = new Date();
-    const timezone = { timeZone: 'America/New_York' };
-    const dateTime = currentDateAndTime.toLocaleString('en-US', timezone);
-
-    return dateTime;
-}
