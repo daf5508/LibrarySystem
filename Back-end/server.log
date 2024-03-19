@@ -1,0 +1,12 @@
+(3/18/2024, 11:35:34 PM): Attempting to connect to database. Attempt #1
+(3/18/2024, 11:35:34 PM): Success: MySQL Database Connection Successful
+(3/18/2024, 11:35:34 PM): Express.js server listening on port 3000
+(3/19/2024, 12:52:10 PM): Attempting to connect to database. Attempt #1
+(3/19/2024, 12:52:10 PM): Success: MySQL Database Connection Successful
+(3/19/2024, 12:52:10 PM): Express.js server listening on port 3000
+(3/19/2024, 12:52:38 PM): Received GET request for /getAllBooks
+(3/19/2024, 12:52:38 PM): Success sending book list
+(3/19/2024, 12:52:43 PM): Received GET request for /getAllGenres
+(3/19/2024, 12:52:43 PM): Received GET request for /getMaxPages
+(3/19/2024, 12:52:43 PM): Success sending genre list
+(3/19/2024, 12:52:43 PM): Success sending max page count

@@ -29,7 +29,6 @@ export class HomePageComponent implements OnInit {
   ) { }
 
   async ngOnInit(): Promise<void> {
-
     window.scrollTo({ top: 0, behavior: 'instant' });
     
     if (this.dataService.bookList === undefined || this.dataService.bookList.length < 1)
@@ -109,14 +108,17 @@ export class HomePageComponent implements OnInit {
 
     const genresMap = new Map<string, number>();
 
-    this.bookList?.forEach((book: Book) => {
-      const eachGenre = book.genre.split(',').map((genre) => genre.trim());
-
-      eachGenre.forEach((genre) => {
-        const count = genresMap.get(genre) || 0;
-        genresMap.set(genre, count + 1);
+    if (this.bookList)
+    {
+      this.bookList.forEach((book: Book) => {
+        const eachGenre = book.genre.split(',').map((genre) => genre.trim());
+  
+        eachGenre.forEach((genre) => {
+          const count = genresMap.get(genre) || 0;
+          genresMap.set(genre, count + 1);
+        });
       });
-    });
+    }
 
     const genresArray = Array.from(genresMap, ([genre, count]) => ({genre, count}));
 
@@ -223,5 +225,10 @@ export class HomePageComponent implements OnInit {
 
   getBookImagePath(book: Book) {
     return book.image;
+  }
+
+  //For unit test since bookList is private
+  getBookList() {
+    return this.bookList;
   }
 }

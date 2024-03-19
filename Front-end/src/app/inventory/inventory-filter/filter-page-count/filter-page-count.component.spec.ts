@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 import { FilterPageCountComponent } from './filter-page-count.component';
 
 describe('FilterPageCountComponent', () => {
@@ -8,7 +10,12 @@ describe('FilterPageCountComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FilterPageCountComponent]
+      declarations: [FilterPageCountComponent],
+      imports: [
+        HttpClientTestingModule,
+        BrowserModule,
+        FormsModule
+      ]
     });
     fixture = TestBed.createComponent(FilterPageCountComponent);
     component = fixture.componentInstance;

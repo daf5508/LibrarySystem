@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { FilterGenreComponent } from './filter-genre.component';
 
 describe('FilterGenreComponent', () => {
@@ -8,7 +8,8 @@ describe('FilterGenreComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FilterGenreComponent]
+      declarations: [FilterGenreComponent],
+      imports: [HttpClientTestingModule]
     });
     fixture = TestBed.createComponent(FilterGenreComponent);
     component = fixture.componentInstance;
