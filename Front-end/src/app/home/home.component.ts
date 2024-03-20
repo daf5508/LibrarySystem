@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Book } from 'src/app/models/book.model';
-import { Genre } from 'src/app/models/genre.model';
 
 import { DataService } from 'src/app/services/dataService.service';
 import { SharedService } from 'src/app/services/sharedService.service';
+
+import mockBookData from '../mock-data-for-unit-tests/home/mock-bookList.json'
+import mockBooksForFindTopGenre from '../mock-data-for-unit-tests/home/mock-booksForFindTopGenres.json';
 
 @Component({
   selector: 'app-home-page',
@@ -15,8 +17,7 @@ import { SharedService } from 'src/app/services/sharedService.service';
 
 export class HomePageComponent implements OnInit {
   
-  private bookList: Book[] | undefined;
-  private genreList: Genre[] | undefined;
+  bookList: Book[] | undefined;
 
   private booksPerPage: number = 9;
 
@@ -88,6 +89,7 @@ export class HomePageComponent implements OnInit {
         break;
     }
 
+    //Resets all pages to page 1
     this.Pages.forEach((value, key) => {
       this.Pages.set(key, 1);
     });
@@ -105,24 +107,29 @@ export class HomePageComponent implements OnInit {
   }
 
   findTopGenres() {
-
+    console.log("Test0: ", mockBookData, " and type: ", typeof(mockBookData));
+    console.log("Test: ", mockBooksForFindTopGenre, " and type: ", typeof(mockBooksForFindTopGenre));
+    console.log("Test1: ", this.bookList, " and type: ", typeof(this.bookList));
     const genresMap = new Map<string, number>();
 
     if (this.bookList)
     {
-      this.bookList.forEach((book: Book) => {
-        const eachGenre = book.genre.split(',').map((genre) => genre.trim());
-  
-        eachGenre.forEach((genre) => {
-          const count = genresMap.get(genre) || 0;
-          genresMap.set(genre, count + 1);
+      this.bookList.forEach((book: Book) => { //Iterates over each book in the book list
+        const eachGenre = book.genre.split(',').map((genre) => genre.trim()); //Split the genres up by commas and trim any spaces
+
+        eachGenre.forEach((genre) => { //Iterates over each genre from the separated genres
+          const count = genresMap.get(genre) || 0; //Retrieves the genre count from the map
+          genresMap.set(genre, count + 1); //Increments the count of the genre by one
         });
       });
+
+      const genresArray = Array.from(genresMap, ([genre, count]) => ({genre, count})); //Converts the map into an array of objects
+      const sortBookBasedOnGenre = genresArray.sort((a, b) => b.count - a.count).map((store) => store.genre); //Sorts the array in descending order
+
+      return sortBookBasedOnGenre;
     }
 
-    const genresArray = Array.from(genresMap, ([genre, count]) => ({genre, count}));
-
-    return genresArray.sort((a, b) => b.count - a.count).map((store) => store.genre);
+    return [];
   }
 
   booksWithCorrespondingGenre(genre: string) {
@@ -227,8 +234,12 @@ export class HomePageComponent implements OnInit {
     return book.image;
   }
 
-  //For unit test since bookList is private
-  getBookList() {
-    return this.bookList;
+  //For unit tests
+  getBooksPerPage() {
+    return this.booksPerPage;
+  }
+
+  getPages() {
+    return this.Pages;
   }
 }

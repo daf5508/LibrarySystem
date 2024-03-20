@@ -1,0 +1,112 @@
+[
+    {
+        "book_id":1,
+        "title":"The Lost Girl",
+        "author":"Test",
+        "genre":"Fiction, Horror, Fantasy, Thriller, Mystery",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":2,
+        "title":"Night of the Living Dummy",
+        "author":"Test",
+        "genre":"Fiction, Horror, Fantasy, Thriller, Mystery",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":3,
+        "title":"The Haunted Mask",
+        "author":"Test",
+        "genre":"Fiction, Horror, Fantasy, Thriller, Mystery",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":4,
+        "title":"Say Cheese And Die!",
+        "author":"Test",
+        "genre":"Fiction, Horror, Fantasy, Thriller, Mystery",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":5,
+        "title":"A Court of Thorns and Roses",
+        "author":"Test",
+        "genre":"Fantasy, Fiction, Novel, Romance, Young Adult",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":6,
+        "title":"Fourth Wing",
+        "author":"Test",
+        "genre":"Fantasy, Romance, Fiction, Dragon, Magic",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":7,
+        "title":"Iron Flame",
+        "author":"Test",
+        "genre":"Fantasy, Romance, Fiction, Dragon, Magic",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":8,
+        "title":"Twisted Lies",
+        "author":"Test",
+        "genre":"Romance, Fiction, Contemporary, Dark, Love, Adult",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":9,
+        "title":"After",
+        "author":"Test",
+        "genre":"Romance, Fiction, Contemporary, Drama, Love, Adult, Young Adult",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    },
+    {
+        "book_id":10,
+        "title":"After We Collided",
+        "author":"Test",
+        "genre":"Romance, Fiction, Contemporary, Drama, Love, Adult, Young Adult",
+        "pages":"Test",
+        "published":"Test",
+        "availability":"Test",
+        "description":"Test",
+        "image":"Test"
+    }
+]
