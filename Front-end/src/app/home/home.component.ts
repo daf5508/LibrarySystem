@@ -107,9 +107,6 @@ export class HomePageComponent implements OnInit {
   }
 
   findTopGenres() {
-    console.log("Test0: ", mockBookData, " and type: ", typeof(mockBookData));
-    console.log("Test: ", mockBooksForFindTopGenre, " and type: ", typeof(mockBooksForFindTopGenre));
-    console.log("Test1: ", this.bookList, " and type: ", typeof(this.bookList));
     const genresMap = new Map<string, number>();
 
     if (this.bookList)
